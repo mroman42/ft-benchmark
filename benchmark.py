@@ -18,10 +18,13 @@ print("Executing benchmark with user: " + user)
 
 
 # Benchmarks
-print("Executing FTP Benchmark...")
-subprocess.call(["./ftpdownload.sh", "ftp://localhost/bach", user, pasw, "ftpdata.csv"])
-print("Executing HTTP Benchmark...")
-subprocess.call(["./httpdownload.sh", "http://localhost/bach", user, pasw, "httpdata.csv"])
-print("Executing HTTPS Benchmark...")
-subprocess.call(["./httpdownload.sh", "https://localhost/bach", user, pasw, "httpsdata.csv"])
+ftpdata = "data/ftpdata.csv"
+httpdata = "data/httpdata.csv"
+httpsdata = "data/httpsdata.csv"
 
+print("Executing FTP Benchmark...")
+subprocess.call(["./ftpdownload.sh", "ftp://localhost/bach", user, pasw, ftpdata])
+print("Executing HTTP Benchmark...")
+subprocess.call(["./httpdownload.sh", "http://localhost/bach", user, pasw, httpdata])
+print("Executing HTTPS Benchmark...")
+subprocess.call(["./httpdownload.sh", "https://localhost/bach", user, pasw, httpsdata])
