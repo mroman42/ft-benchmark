@@ -17,10 +17,18 @@ pasw = args['pass']
 print("Executing benchmark with user: " + user)
 
 
+# Benchmark id number
+idn = 0
+while (os.path.isfile("data/ftpdata{0}.csv".format(idn)) 
+       or os.path.isfile("data/httpdata{0}.csv".format(idn)) 
+       or os.path.isfile("data/httpsdata{0}.csv".format(idn))):
+    idn = idn + 1
+
+
 # Benchmarks
-ftpdata = "data/ftpdata.csv"
-httpdata = "data/httpdata.csv"
-httpsdata = "data/httpsdata.csv"
+ftpdata = "data/ftpdata{0}.csv".format(idn)
+httpdata = "data/httpdata{0}.csv".format(idn)
+httpsdata = "data/httpsdata{0}.csv".format(idn)
 
 print("Executing FTP Benchmark...")
 subprocess.call(["./ftpdownload.sh", "ftp://localhost/bach", user, pasw, ftpdata])
