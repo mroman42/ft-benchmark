@@ -27,9 +27,10 @@ for filename in os.listdir("./data/"):
         datareader = csv.reader(csvfile, delimiter=',')
         next(datareader, None) # Skips the header            
         for row in datareader:
-            mbps = float(row[0])
-            byts = float(row[1])
-            time = time + byts/(mbps*1024*1024)
+            mins,secs = row[0].split('m')        
+            mins = float(mins)
+            secs = float(secs[:-1])
+            time = time + mins*60 + secs
 
         ftime.write("{0},{1},{2}\n".format(idn,time,filetype))
 
