@@ -29,3 +29,32 @@ ftp://localhost/bach
 http://localhost/bach
 https://localhost/bach
 ```
+
+## Ejecución
+
+El script sólo requiere la intervención del usuario para introducir el usuario y
+contraseña de `ftp`. Una ayuda a los parámetros que requiere el script puede
+consultarse ejecutando:
+
+```bash
+python3 benchmark.py --help
+```
+
+En particular, el script puede aceptar la contraseña como argumento o dentro del
+propio script, para evitar que el usuario deba escribirla en texto plano como
+argumento.
+
+El script informará del avance del experimento, pero puede tardar varios minutos
+en terminar cada una de las fases.
+
+
+## Scripts auxiliares
+
+Con el script principal, se incluyen una serie de auxiliares que ayudan a su
+ejecución:
+
+* `load.py`: crea una carga sintética similar a la real usada en el experimento.
+* `timer.py`: calcula el tiempo completo y crea el archivo `time.csv` con los
+  datos.
+* `stat.r`: ejecuta los tests estadísticos ANOVA y LSD sobre `time.csv`.
+* `download.sh`: utiliza un protocolo dado para ejecutar una descarga.
