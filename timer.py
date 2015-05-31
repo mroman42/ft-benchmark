@@ -1,23 +1,36 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-# Computes total time
 import csv
-
-with open("data/ftpdata.csv", 'rt', encoding='utf8') as csvfile:
-    time = 0
-    datareader = csv.reader(csvfile, delimiter=',', )
-    next(datareader, None) # Skips the header
-
-    for row in datareader:
-        mbps = float(row[0])
-        byts = float(row[1])
-
-        time = time + byts/(mbps*1024*1024)
-
-print(time)
+import os
+import fnmatch
+import re
 
 ftime = open('data/time.csv','w')
 ftime.write("N,Time,Type\n")
-ftime.write("{0},{1},{2}\n".format(1,time,"ftp"))
-ftime.close()
+
+# Traverses all the files
+for filename in os.listdir("./data/"):
+    filetype = None
+    if (fnmatch.fnmatch(filename,"ftpdata*.csv")): filetype = "ftp"
+    if (fnmatch.fnmatch(filename,"httpdata*.csv")): filetype = "http"
+    if (fnmatch.fnmatch(filename,"httpsdata*.csv")): filetype = "https"
+    if (filetype == None): continue
+    filename = "./data/" + filename
+    
+    # Computes total time
+    with open(filename, 'rt', encoding='utf8') as csvfile:
+        print(filename)
+        idn = int(re.search(r'\d+', filename).group())
+        time = 0
+
+        datareader = csv.reader(csvfile, delimiter=',')
+        next(datareader, None) # Skips the header            
+        for row in datareader:
+            mbps = float(row[0])
+            byts = float(row[1])
+            time = time + byts/(mbps*1024*1024)
+
+        ftime.write("{0},{1},{2}\n".format(idn,time,filetype))
+
+ftime.close()        
